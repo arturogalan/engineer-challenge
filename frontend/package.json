@@ -4,9 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.2.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@tanstack/react-query": "^4.13.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
@@ -21,6 +19,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "test:coverage": "npm run test -- --coverage  --collectCoverageFrom='src/**/*.{ts,tsx,js}' --verbose",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -42,7 +41,11 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "autoprefixer": "^9",
+    "msw": "^0.47.4",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }

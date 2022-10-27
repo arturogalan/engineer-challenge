@@ -1,0 +1,9 @@
+ul {
+  display: none;
+}
+.hiddenInput{
+  display: none;
+}
+.hiddenInput[type='checkbox']:checked ~ ul {
+  display: block;
+}

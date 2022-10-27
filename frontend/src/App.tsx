@@ -1,18 +1,26 @@
-import Navbar from "./Navbar";
-import Header from "./Header";
-import Table from "./Table";
+import * as useClosable from "./hooks/useClosable";
+import PoliciesListPage from "./pages/PoliciesListPage";
 
+import { useEffect } from "react";
+import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 import "./index.css";
 
-const App = () => (
-  <div>
-    <Navbar />
-    <div className="w-full p-8">
-      <Header />
-      <Table />
+const App = () => {
+  useEffect(() => {
+    return () => {
+      useClosable.unregisterAllClosable();
+    };
+  }, []);
+  return (
+    <div onClick={useClosable.closeAllClosable}>
+      <Navbar />
+      <div className="w-full p-8">
+        <Header />
+        <PoliciesListPage />
+      </div>
     </div>
-  </div>
-);
-
+  );
+};
 
 export default App;
