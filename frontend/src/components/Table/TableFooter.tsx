@@ -1,12 +1,8 @@
 import ComboBox from "../ComboBox";
 
 type TableFooterProps = {
+  tablePagination: TablePagination;
   initialValue: number;
-  currentPageNumber: number;
-  totalPages: number;
-  totalRows: number;
-  initialRowNumber: number;
-  finalRowNumber: number;
   onClickPage: (page: number) => void;
   onClickPageSize: (pageSize: number) => void;
 };
@@ -25,12 +21,12 @@ const TableFooter = (props: TableFooterProps) => {
         />
       </span>
       <ul className="inline-flex">
-        {Array.from(Array(props.totalPages)).map((_, index) => (
+        {Array.from(Array(props.tablePagination.totalPages)).map((_, index) => (
           <li key={`${index}-page`}>
             <button
               onClick={() => props.onClickPage(index + 1)}
               className={`${
-                props.currentPageNumber === index + 1
+                props.tablePagination.currentPageNumber === index + 1
                   ? "bg-gray-300"
                   : "hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
               } py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 `}
@@ -41,8 +37,9 @@ const TableFooter = (props: TableFooterProps) => {
         ))}
       </ul>
       <span className="mr-5 absolute right-2 bottom-0">
-        Showing {props.initialRowNumber} to {props.finalRowNumber} of{" "}
-        {props.totalRows} elements
+        Showing {props.tablePagination.initialRowNumber} to{" "}
+        {props.tablePagination.finalRowNumber} of{" "}
+        {props.tablePagination.totalRows} elements
       </span>
     </div>
   );
