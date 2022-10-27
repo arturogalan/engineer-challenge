@@ -11,7 +11,8 @@ type TableProps = {
 const Table = (props: TableProps) => {
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(30);
-
+  const [tablePaginationProps, setTablePaginationProps] =
+    useState<TablePagination>();
   const { currentPageData, totalPages, initialRowNumber, finalRowNumber } =
     useTable(props.rows, currentPageNumber, pageSize);
   const changePageSize = (newPageSize: number) => {
@@ -21,6 +22,21 @@ const Table = (props: TableProps) => {
   useEffect(() => {
     setCurrentPageNumber(1);
   }, [totalPages]);
+  useEffect(() => {
+    setTablePaginationProps({
+      totalRows: props.rows.length,
+      currentPageNumber: currentPageNumber,
+      initialRowNumber: initialRowNumber,
+      finalRowNumber: finalRowNumber,
+      totalPages: totalPages,
+    });
+  }, [
+    props.rows,
+    currentPageNumber,
+    initialRowNumber,
+    finalRowNumber,
+    totalPages,
+  ]);
   if (props.isLoading)
     return <div className="flex justify-center py-2">Loading</div>;
   if (props.isError)
@@ -101,16 +117,14 @@ const Table = (props: TableProps) => {
                 })}
               </tbody>
             </table>
-            <TableFooter
-              totalRows={props.rows.length}
-              initialValue={pageSize}
-              currentPageNumber={currentPageNumber}
-              initialRowNumber={initialRowNumber}
-              finalRowNumber={finalRowNumber}
-              totalPages={totalPages}
-              onClickPage={setCurrentPageNumber}
-              onClickPageSize={changePageSize}
-            />
+            {!!tablePaginationProps && (
+              <TableFooter
+                initialValue={pageSize}
+                tablePagination={tablePaginationProps}
+                onClickPage={setCurrentPageNumber}
+                onClickPageSize={changePageSize}
+              />
+            )}
           </div>
         </div>
       </div>
